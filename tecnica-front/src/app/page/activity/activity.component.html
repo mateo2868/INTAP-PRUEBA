@@ -1,0 +1,126 @@
+<!-- Button trigger modal -->
+
+
+<div class="container" style="padding: 10rem">
+  <div style="margin-bottom: 1rem;">
+    El total de horas es: {{totalTime}} Horas
+  </div>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Crear Actividad
+  </button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Descripcion</th>
+        <th>Tiempo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of activityList">
+        <td>{{i.id}}</td>
+        <td>{{i.description}}</td>
+        <td>
+          <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#verTiempo" (click)="initModalSee(i)">Ver</button>
+          <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addTiempo" (click)="initModalAdd(i.id)">Agregar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear Actividad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeModal></button>
+      </div>
+      <div class="modal-body">
+        <div class="container" *ngIf="activityForm">
+          <form [formGroup]="activityForm">
+            <div class="row">
+              <div class="col-lg-12">
+                <label for="">Descripcion</label>
+                <input type="text" class="form-control" formControlName="description">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" [disabled]="!activityForm.valid" (click)="saveActivity()">Guardar</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addTiempo" tabindex="-1" aria-labelledby="addTiempoLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTiempoLabel">Agregar tiempo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeModalAdd></button>
+      </div>
+      <div class="modal-body">
+        <div class="container" *ngIf="timeForm">
+          <form [formGroup]="timeForm">
+            <div class="alert alert-danger" role="alert" *ngIf="msgTime">
+              {{msgTime}}
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="">Fecha</label>
+                <input type="date" class="form-control" formControlName="date">
+              </div>
+              <div class="col-lg-6">
+                <label for="">Tiempo</label>
+                <input type="number" class="form-control" formControlName="hour">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" [disabled]="!timeForm.valid" (click)="saveTime()">Guardar</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="verTiempo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear Actividad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          {{description}}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Tiempo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of listTime">
+                <td>{{i.date}}</td>
+                <td>{{i.hour}} Horas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
